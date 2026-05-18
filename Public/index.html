@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock App - Auth Test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>System Login</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+
+            <div class="input-group">
+                <label for="authType">Authentication Method</label>
+                <select id="authType">
+                    <option value="jwt">JSON Web Token (JWT)</option>
+                    <option value="cookie">Cookie-Based</option>
+                </select>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+        <div id="errorMessage" class="error hidden">Invalid credentials or server error.</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h2>Welcome to the Protected Area</h2>
+            <button id="logoutBtn" class="secondary-btn">Logout</button>
+        </header>
+
+        <div class="gif-placeholder" id="gifContainer">
+            <p> [ Insert Big GIF Here ] </p>
+            </div>
+
+        <div class="action-panel">
+            <h3>Session Testing</h3>
+            <p>Use this button to ping the server and verify if your current session (Cookie or JWT) is still valid or if it has been hijacked/expired.</p>
+            <button id="testSessionBtn">Ping Secure API</button>
+            <div id="sessionResult"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
