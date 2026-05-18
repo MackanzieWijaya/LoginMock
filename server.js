@@ -8,12 +8,20 @@ const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const Database = require("better-sqlite3");
+const fs = require("fs"); 
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET;
 const SESSION_SECRET = process.env.SESSION_SECRET;
+
+if (!fs.existsSync("./database")) {
+    fs.mkdirSync("./database");
+}
+
+// THEN create DB
+const db = new Database("./database/users.db");
 
 const db = new Database("./database/users.db");
 
