@@ -23,8 +23,6 @@ if (!fs.existsSync("./database")) {
 // THEN create DB
 const db = new Database("./database/users.db");
 
-const db = new Database("./database/users.db");
-
 db.prepare(`
 CREATE TABLE IF NOT EXISTS users(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
