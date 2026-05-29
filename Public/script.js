@@ -140,3 +140,70 @@ if (logoutBtn) {
 
     });
 }
+
+const postCommentBtn = document.getElementById("postCommentBtn");
+const commentsDiv = document.getElementById("comments");
+
+async function loadComments() {
+    if (!commentsDiv) return;
+
+    const response = await fetch("/api/comments");
+    const comments = await response.json();
+
+    commentsDiv.innerHTML = "";
+
+    comments.forEach(c => {
+        commentsDiv.innerHTML += `
+            <p><strong>${c.username}:</strong> ${c.comment}</p>
+        `;
+    });
+}
+
+if (postCommentBtn) {
+    postCommentBtn.addEventListener("click", async () => {
+        const comment = document.getElementById("commentInput").value;
+
+        const token = localStorage.getItem("jwt_token");
+
+        const headers = {
+            "Content-Type": "application/json"
+        };
+
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        await fetch("/api/comments", {
+            method: "POST",
+            headers: headers,
+            credentials: "include",
+            body: JSON.stringify({ comment })
+        });
+
+        document.getElementById("commentInput").value = "";
+
+        loadComments();
+    });
+
+    loadComments();
+}
+
+const clearCommentsBtn =
+    document.getElementById("clearCommentsBtn");
+
+if(clearCommentsBtn){
+
+    clearCommentsBtn.addEventListener(
+        "click",
+        async ()=>{
+
+            await fetch("/api/comments",{
+                method:"DELETE"
+            });
+
+            loadComments();
+
+        }
+    );
+
+}

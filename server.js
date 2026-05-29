@@ -31,6 +31,14 @@ CREATE TABLE IF NOT EXISTS users(
 )
 `).run();
 
+db.prepare(`
+CREATE TABLE IF NOT EXISTS comments(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    comment TEXT
+)
+`).run();
+
 
 // db injection
 const users = [
@@ -236,6 +244,54 @@ app.get("/api/auth-debug",(req,res)=>{
 
 });
 
+
+app.post("/api/comments", (req, res) => {
+    const { comment } = req.body;
+
+    let username = "anonymous";
+
+    if (req.session.user) {
+        username = req.session.user.username;
+    } else if (req.headers.authorization) {
+        try {
+            const token = req.headers.authorization.split(" ")[1];
+            const decoded = jwt.verify(token, JWT_SECRET);
+            username = decoded.username;
+        } catch {
+            return res.sendStatus(401);
+        }
+    } else {
+        return res.sendStatus(401);
+    }
+
+    db.prepare(`
+        INSERT INTO comments(username, comment)
+        VALUES (?, ?)
+    `).run(username, comment);
+
+    res.json({ message: "Comment saved" });
+});
+
+app.get("/api/comments", (req, res) => {
+    const comments = db.prepare(`
+        SELECT * FROM comments
+        ORDER BY id DESC
+    `).all();
+
+    res.json(comments);
+});
+
+app.delete("/api/comments", (req, res) => {
+
+    db.prepare(`
+        DELETE FROM comments
+    `).run();
+
+    res.json({
+        message: "All comments deleted"
+    });
+
+});
 
 app.listen(PORT,()=>{
     console.log(
