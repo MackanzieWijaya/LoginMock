@@ -76,7 +76,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         httpOnly: false,
-        sameSite:"lax"
+        sameSite:"none"
     }
 }));
 
