@@ -68,6 +68,7 @@ for(const [username,password] of users){
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
     secret: SESSION_SECRET,
