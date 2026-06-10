@@ -69,6 +69,7 @@ for(const [username,password] of users){
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.set("trust proxy", 1);
 
 app.use(session({
     secret: SESSION_SECRET,
